@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .profile-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .profile-card h1 {
+            margin-bottom: 5px;
+            font-size: 1.5em;
+        }
+
+        .profile-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <img src="" id="img" alt="Profile Picture">
+        <h1 id="1"></h1>
+        <div class="profile-info">
+            <p><strong>Email:</strong> <span id="2"></span></p>
+            <p><strong>Phone:</strong> <span id="3"></span></p>
+            <p><strong>ID:</strong> <span id="4"></span></p>
+            <p><strong>Age:</strong> <span id="5"></span></p>
+        </div>
+    </div>
+    <script>
+        fetch("https://randomuser.me/api/").then((response)=>{
+            if(response.ok){
+                console.log("성공");
+                return response.json(); //자바스크립트로 변환
+            }
+        })
+        .then((data)=>{
+            console.log(data);
+            const firstName = data.results[0].name.first;
+            const lastName = data.results[0].name.last;
+            const titleName = data.results[0].name.title;
+            const email = data.results[0].email;
+            const phone = data.results[0].phone;
+            const id = data.results[0].id.name;
+            const picture = data.results[0].picture.large;
+            const dob = data.results[0].dob.age;
+            document.getElementById("img").src = `${picture}`;
+            document.querySelector("h1").innerHTML=`${firstName} ${lastName} ${titleName}`;
+            document.getElementById("2").innerHTML = `${email}`;
+            document.getElementById("3").innerHTML = `${phone}`;
+            document.getElementById("4").innerHTML = `${id}`;
+            document.getElementById("5").innerHTML = `${dob}`;
+        })
+    </script>
+</body>
+</html>
